@@ -3,7 +3,7 @@
 ###########
 
 # pull official base image
-FROM node as builder
+FROM node:15.2.0-alpine as builder
 
 # set working directory
 WORKDIR /usr/src/app
@@ -13,10 +13,9 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 
 # install and cache app dependencies
 COPY package.json .
-#COPY package-lock.json .
-#RUN npm ci
-RUN npm install
-RUN npm install react-scripts@4.0.0 --silent
+COPY package-lock.json .
+RUN npm ci
+#RUN npm install react-scripts@4.0.0 --silent
 
 # set environment variables
 ARG REACT_APP_API_SERVICE_URL
